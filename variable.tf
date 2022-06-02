@@ -12,7 +12,11 @@ variable "cluster_name" {
 }
 
 
-
+variable "client_secret" {
+  description = "client secret details to establish connectivity from terraform to azure via CI/CD"
+  type        = string
+  default     = null
+}
 
 variable "client_id" {
   description = "(Optional) The Client ID (appId) for the Service Principal used for the AKS deployment"
