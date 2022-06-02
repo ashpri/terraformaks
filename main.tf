@@ -14,7 +14,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   sku_tier                = var.sku_tier
   private_cluster_enabled = var.private_cluster_enabled
 
-  
+
 
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
@@ -37,7 +37,6 @@ resource "azurerm_kubernetes_cluster" "main" {
       enable_host_encryption = var.enable_host_encryption
     }
   }
-
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? ["default_node_pool_auto_scaled"] : []
     content {
@@ -74,26 +73,6 @@ resource "azurerm_kubernetes_cluster" "main" {
       user_assigned_identity_id = var.user_assigned_identity_id
     }
   }
-  addon_profile {
-    http_application_routing {
-      enabled = var.enable_http_application_routing
-    }
-
-    kube_dashboard {
-      enabled = var.enable_kube_dashboard
-    }
-
-    azure_policy {
-      enabled = var.enable_azure_policy
-    }
-
-    oms_agent {
-      enabled                    = var.enable_log_analytics_workspace
-      log_analytics_workspace_id = var.enable_log_analytics_workspace ? azurerm_log_analytics_workspace.main[0].id : null
-    }
-
-
-
 
   network_profile {
     network_plugin     = var.network_plugin
@@ -107,7 +86,3 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   tags = var.tags
 }
-
-
-
-
